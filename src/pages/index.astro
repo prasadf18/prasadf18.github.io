@@ -1,0 +1,41 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+---
+
+<Layout title="Home">
+  <h1>Prasad Firame</h1>
+
+  <p>
+    I’m a developer and writer focused on building simple, fast, and scalable software systems.
+    I spend most of my time exploring distributed systems, data engines, and developer tools.
+  </p>
+
+  <p>
+    My work is about making complex systems understandable — whether that’s through code, writing, or building tools.
+    I enjoy breaking down how systems work and sharing it in a clear, practical way.
+  </p>
+
+  <p style="margin-top:2.0rem; font-size:0.95rem;">
+    write-ups
+  </p>
+
+  {posts
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+    .map((post) => (
+      <p>
+        {post.data.date.toISOString().slice(0, 10)} —{" "}
+        <a href={`/blog/${post.data.slug}`}>
+          {post.data.title}
+        </a>
+      </p>
+    ))}
+
+  <p style="margin-top:2rem;">
+    <a href="https://x.com/rev_proxy">x/twitter</a> ·
+    <a href="mailto:pfirame18@gmail.com">email</a> ·
+    <a href="https://github.com/prasadf18">github</a>
+  </p>
+</Layout>
