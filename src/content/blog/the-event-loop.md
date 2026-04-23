@@ -1,6 +1,6 @@
 ---
 title: "The Event Loop: JavaScript's Secret Traffic Controller"
-Date: 2025-04-23
+date: 2025-04-23
 ---
 
 You've probably heard someone say *"JavaScript is single-threaded"* and nodded along while quietly wondering what that actually means  and why anyone should care.
