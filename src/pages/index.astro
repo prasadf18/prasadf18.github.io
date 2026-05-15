@@ -3,6 +3,12 @@ import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("blog");
+
+// sort latest first
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// take only first 2
+const latestPosts = posts.slice(0, 2);
 ---
 
 <Layout title="Home">
@@ -21,30 +27,37 @@ const posts = await getCollection("blog");
     I like breaking complex systems into simple ideas and turning them into code, writing, and experiments.
   </p>
 
- <p>
-  Read my Origin story <a href="/origin-story">here</a>
-</p>
-
+  <p>
+    Read my Origin story <a href="/origin-story">here</a>
+  </p>
 
   <p style="margin-top:2.0rem; font-size:0.95rem;">
     write-ups
   </p>
 
-  {posts
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-    .map((post) => (
-      <p>
-        {post.data.date.toISOString().slice(0, 10)} —{" "}
-        <a href={`/blog/${post.id}`}>
-          {post.data.title}
-        </a>
-      </p>
-    ))}
+  {latestPosts.map((post) => (
+    <p>
+      {post.data.date.toISOString().slice(0, 10)} —{" "}
+      <a href={`/blog/${post.slug}/`}>
+        {post.data.title}
+      </a>
+    </p>
+  ))}
+
+  <!-- NEXT BUTTON (>) -->
+  {posts.length > 2 && (
+    <div style="display:flex; justify-content:flex-end; margin-top:10px;">
+      <a href="/page/1" style="font-size:24px;">
+        &gt;
+      </a>
+    </div>
+  )}
 
   <p style="margin-top:2rem;">
     <a href="https://x.com/rev_proxy">x/twitter</a> ·
     <a href="mailto:pfirame18@gmail.com">email</a> ·
-    <a href="https://github.com/prasadf18">github</a> 
+    <a href="https://github.com/prasadf18">github</a> ·
     <a href="/resume.pdf" target="_blank">📄 CV</a>
   </p>
+
 </Layout>

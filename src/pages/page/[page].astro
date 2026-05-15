@@ -1,0 +1,62 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("blog");
+
+// sort latest first
+allPosts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+// pagination config
+const PAGE_SIZE = 2;
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  posts.sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  );
+
+  const totalPages = Math.ceil(posts.length / PAGE_SIZE);
+
+  return Array.from({ length: totalPages }).map((_, i) => ({
+    params: { page: String(i + 1) },
+    props: {
+      posts,
+      page: i + 1,
+      totalPages,
+    },
+  }));
+}
+
+const { posts, page, totalPages } = Astro.props;
+
+const start = (page - 1) * PAGE_SIZE;
+const paginatedPosts = posts.slice(start, start + PAGE_SIZE);
+---
+
+<Layout title={`Page ${page}`}>
+
+  <h1>Write-ups</h1>
+
+  {paginatedPosts.map((post) => (
+    <p>
+      {post.data.date.toISOString().slice(0, 10)} —{" "}
+      <a href={`/blog/${post.slug}/`}>
+        {post.data.title}
+      </a>
+    </p>
+  ))}
+
+  <!-- NEXT BUTTON (>) -->
+  <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+    {page < totalPages && (
+      <a href={`/page/${page + 1}`} style="font-size:24px;">
+        &gt;
+      </a>
+    )}
+  </div>
+
+</Layout>
