@@ -45,22 +45,19 @@ const latestPosts = posts.slice(0, 2);
   ))}
 
   <!-- NAVIGATION -->
+
 {posts.length > 2 && (
-  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+  <div style="display:flex; justify-content:flex-end; align-items:center; gap:15px; margin-top:10px;">
 
-    <!-- LEFT: empty (home is already here) -->
-    <div></div>
+    <!-- PREV (optional future use) -->
+    <a href="/" style="font-size:24px; opacity:0.6;">
+      &lt;
+    </a>
 
-  
-    <!-- RIGHT: next -->
-    <div>
-      <a href="/" style="font-size:14px; opacity:0.7;">
-        <
-      </a>
-      <a href="/page/1" style="font-size:24px;">
-        &gt;
-      </a>
-    </div>
+    <!-- NEXT -->
+    <a href="/page/1" style="font-size:24px;">
+      &gt;
+    </a>
 
   </div>
 )}
