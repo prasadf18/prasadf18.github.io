@@ -36,14 +36,15 @@ const latestPosts = posts.slice(0, 2);
   </p>
 
   {latestPosts.map((post) => (
-    <p>
-      {post.data.date.toISOString().slice(0, 10)} —{" "}
-      <a href={`/blog/${post.slug}/`}>
-        {post.data.title}
-      </a>
-    </p>
-  ))}
+  <p>
+    {post.data.date.toISOString().slice(0, 10)} —{" "}
+    
+    <a href={`/blog/${post.id.replace(".md", "")}/`}>
+      {post.data.title}
+    </a>
 
+  </p>
+))}
   <!-- NAVIGATION -->
 
 {posts.length > 2 && (
