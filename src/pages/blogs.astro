@@ -1,0 +1,38 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+
+// latest first
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="Blogs">
+
+  <div id="main-content">
+
+    <h1 style="font-size:1.6rem; margin-bottom:2rem;">
+      blogs
+    </h1>
+
+    {posts.map((post) => (
+      <p style="margin-bottom:1rem;">
+        <span class="post-date">
+          {post.data.date.toISOString().slice(0, 10)}
+        </span>
+
+        {" "}—{" "}
+
+        <a
+          href={`/blog/${post.id.replace(".md", "")}/`}
+          class="slash-link hover-sound"
+        >
+          {post.data.title}
+        </a>
+      </p>
+    ))}
+
+  </div>
+
+</Layout>
