@@ -5,7 +5,21 @@ date: 2026-10-25
 
 A while ago, someone asked me a simple question: *what is the value of code?*
 
-I didn't have a clean answer then. I do have one now, or at least the beginning of one. This is my first blog post, and writing it is partly the point. I was nudged to start writing at a meetup, and the reason makes sense to me: writing forces you to think clearly. If you can't put an idea on a page without it falling apart, you don't understand it yet.
+I didn't have a clean answer then. I do have one now, or at least the beginning of one. This is my first blog post, and writing it is partly the point. I'm writing it inspired by [SVS](https://svs.io), whose way of thinking about careers and building things has shaped how I see my own. At a recent meetup, I was nudged to start writing, and the reason makes sense to me: writing forces you to think clearly. If you can't put an idea on a page without it falling apart, you don't understand it yet.
+
+Here is the post I shared after that meetup:
+
+<iframe
+  src="https://www.linkedin.com/embed/feed/update/urn:li:share:7380230648441143296"
+  height="520"
+  width="100%"
+  style="max-width: 504px; border: 0;"
+  frameborder="0"
+  allowfullscreen
+  title="My LinkedIn post about the meetup"
+></iframe>
+
+[View the post on LinkedIn](https://lnkd.in/p/gTyVxhVV)
 
 So let me think out loud.
 
