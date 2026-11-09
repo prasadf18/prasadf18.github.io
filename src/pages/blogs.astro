@@ -22,7 +22,7 @@ posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
           {post.data.date.toISOString().slice(0, 10)}
         </span>
 
-        {" "}—{" "}
+        {" "}
 
         <a
           href={`/blog/${post.id.replace(".md", "")}/`}
