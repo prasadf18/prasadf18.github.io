@@ -21,9 +21,9 @@ I started as an intern and spent two years working as a developer, delivering th
 
 ## What's next
 
-I'm going to pick one area and go deep. For me that's databases, distributed systems and building AI agents, with Go as my main language.
+I'm going to pick one area and go deep. For me that's databases, distributed systems and building AI agents. I'm not tied to one language. I'll use Go, Python, TypeScript or whatever stack fits the problem.
 
-I'll build small things and share them as I go, including what doesn't work.
+My next goal is to build and ship small apps on my own time, try indie hacking, and share what I learn as I go, including what doesn't work.
 
 I'll treat every question I can't answer as a study list: write down what I got stuck on and learn exactly that.
 
