@@ -33,21 +33,39 @@ const paginatedPosts = posts.slice(start, start + PAGE_SIZE);
 
 <Layout title={`Page ${page}`}>
 
-  {paginatedPosts.map((post) => (
-    <p>
-      {post.data.date.toISOString().slice(0, 10)} —{" "}
-      <a href={`/blog/${post.slug}/`}>
-        {post.data.title}
-      </a>
-    </p>
-  ))}
+  <div id="main-content">
 
-  <div style="display:flex; justify-content:flex-end; margin-top:20px;">
-    {page < totalPages && (
-      <a href={`/page/${page + 1}`} style="font-size:24px;">
-        &gt;
-      </a>
-    )}
+    {paginatedPosts.map((post) => (
+      <p style="margin-bottom:1rem;">
+        <span class="post-date">
+          {post.data.date.toISOString().slice(0, 10)}
+        </span>{" "}
+        <a
+          href={`/blog/${post.id.replace(".md", "")}/`}
+          class="slash-link hover-sound"
+        >
+          {post.data.title}
+        </a>
+      </p>
+    ))}
+
+  </div>
+
+  <div style="display:flex; justify-content:space-between; margin-top:20px;">
+    <span>
+      {page > 1 && (
+        <a href={`/page/${page - 1}/`} style="font-size:24px;" class="slash-link hover-sound">
+          &lt;
+        </a>
+      )}
+    </span>
+    <span>
+      {page < totalPages && (
+        <a href={`/page/${page + 1}/`} style="font-size:24px;" class="slash-link hover-sound">
+          &gt;
+        </a>
+      )}
+    </span>
   </div>
 
 </Layout>
