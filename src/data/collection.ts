@@ -10,12 +10,18 @@ export const collection: { title: string; note: string; items: Item[] }[] = [
       { title: "Naruto" },
       { title: "One Piece" },
       { title: "Attack on Titan" },
+      { title: "Dragon Ball Z" },
+      { title: "Fullmetal Alchemist" },
+      { title: "Fairy Tail" },
     ],
   },
   {
     title: "manga",
     note: "what I read",
-    items: [{ title: "Vagabond" }],
+    items: [
+      { title: "Vagabond" },
+      { title: "Elseid" },
+    ],
   },
   {
     title: "manhwa",
