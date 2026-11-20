@@ -9,16 +9,24 @@ const latestPosts = posts.slice(0, 5);
 // Edit this list to change the timeline. Newest first.
 const years = [
   {
+    year: "2027",
+    text: "The plan is to launch a bunch of apps and write about each one as I build it, so anyone can follow along, including the parts that don't work.",
+  },
+  {
     year: "2026",
-    text: "I wrote my first posts, on databases and Postgres. I decided to go deep on databases, distributed systems and AI agents instead of chasing every new tool. I have not shipped an app of my own yet, but I am building one now.",
+    text: "I had been thinking about starting something of my own for a while, and this year I did. I started ACE Labs, a small product building firm. I met a lot of other builders, started building, and started writing up my research. These days I'm focused on indie hacking.",
   },
   {
     year: "2025",
-    text: "I kept working as a developer and learned across the stack, from React and Node.js to Python and AI agents with voice. I spent more time in builder and open source communities and met people I learned a lot from.",
+    text: "I kept at it as a full-stack developer, picked up Python and AI agents with voice, and spent more time in builder and open source communities.",
+  },
+  {
+    year: "2024",
+    text: "I got my first internship and it turned into a full-time job. Since then I've worked as a full-stack developer on SaaS and enterprise applications.",
   },
   {
     year: "2023",
-    text: "I was working out what I wanted to do. I joined builder communities, reached out to people cold and looked for a way into real engineering work.",
+    text: "I spent the year in pop-up Discord servers. I was into buildspace but couldn't build anything yet. I was learning and trying to understand the ecosystem.",
   },
 ];
 ---
@@ -38,6 +46,9 @@ const years = [
       I grew up in a small village where technology was not part of everyday life. I got curious about computers through movies and games, and then more curious about how they worked underneath. It took a while to turn that into a career.
     </p>
     <p>
+      Since then I've tried to be the kind of person who does the work in front of me properly, keeps learning in the open, and keeps building on the side. I like understanding how things work one level down, and I like shipping things people can use.
+    </p>
+    <p>
       The longer version is <a href="/origin-story">here</a>.
     </p>
   </section>
@@ -45,7 +56,10 @@ const years = [
   <section>
     <h2>right now</h2>
     <p>
-      I haven't built anything yet that I'd call finished, but I'm building right now. I'm making small apps on my own time, going deep on databases, and writing down what I learn as I go, including what doesn't work.
+      I haven't built anything yet that I'd call finished, but I'm building right now. I'm making small apps on my own time, going deep on databases, and writing down what I learn as I go, including what doesn't work. Some of that happens through <a href="https://acelabs-hq.github.io/acelabs/">ACE Labs</a>, which I run independently of my day job.
+    </p>
+    <p>
+      My latest deep dive is on <a href="/blog/postgres-notify-global-lock/">the lock hiding behind Postgres LISTEN/NOTIFY</a>.
     </p>
   </section>
 

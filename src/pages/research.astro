@@ -11,6 +11,14 @@ import Layout from "../layouts/Layout.astro";
     The goal is not just to use libraries, but to understand how real systems behave under the hood.
   </p>
 
+  <section class="featured">
+    <p class="post-date">latest deep dive · 2026-11-20</p>
+    <h2><a href="/blog/postgres-notify-global-lock/">The one lock hiding behind Postgres LISTEN/NOTIFY</a></h2>
+    <p>
+      Two well-known write-ups disagree on whether LISTEN/NOTIFY scales. I read both, plus the docs, to find out why one global lock sits in the commit path, what batching does about it, and what is still unclear.
+    </p>
+  </section>
+
   <!-- ========================= -->
   <!-- AI / ML PAPERS -->
   <!-- ========================= -->
