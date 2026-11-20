@@ -6,6 +6,11 @@ const posts = await getCollection("blog");
 posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const latestPosts = posts.slice(0, 5);
 
+// Used for the "been here since" counter.
+const born = "2003-03-18T00:00:00Z";
+const YEAR_MS = 365.2425 * 24 * 60 * 60 * 1000;
+const initialAge = ((Date.now() - new Date(born).getTime()) / YEAR_MS).toFixed(9);
+
 // Edit this list to change the timeline. Newest first.
 const years = [
   {
@@ -35,6 +40,9 @@ const years = [
   <header class="hero">
     <h1>hi, I'm Prasad.</h1>
     <p class="big">I build stuff.</p>
+    <p class="since">
+      been here since <span id="age" data-born={born} title="and counting">{initialAge}</span> years.
+    </p>
     <p>
       I'm an engineer, a curious problem solver and a continuous learner. I like databases, distributed systems and AI agents. I also like to travel, and I write when the mood strikes.
     </p>
@@ -111,7 +119,31 @@ const years = [
   </section>
 </Layout>
 
+<script>
+  const el = document.getElementById("age");
+  if (el?.dataset.born) {
+    const born = new Date(el.dataset.born).getTime();
+    const YEAR_MS = 365.2425 * 24 * 60 * 60 * 1000;
+    const tick = () => {
+      el.textContent = ((Date.now() - born) / YEAR_MS).toFixed(9);
+    };
+    tick();
+    setInterval(tick, 50);
+  }
+</script>
+
 <style>
+.since {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+#age {
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
 .hero {
   margin-bottom: 2.5rem;
 }
