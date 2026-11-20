@@ -1,155 +1,116 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const pocs = [
+  {
+    name: "FrameIQ",
+    url: "https://github.com/prasadf18/FrameIQ",
+    text: "OpenCV-powered multimodal RAG system for computer vision, scene understanding, OCR, tracking and visual search across images and video streams.",
+  },
+  {
+    name: "Helios",
+    url: "https://github.com/prasadf18/Helios",
+    text: "A distributed database written in Go, inspired by Google's Bigtable.",
+  },
+  {
+    name: "ozone",
+    url: "https://github.com/prasadf18/ozone",
+    text: "An in-memory key-value database with durable write-ahead logging via Kafka, able to rebuild state after crashes.",
+  },
+  {
+    name: "gocage",
+    url: "https://github.com/prasadf18/gocage",
+    text: "A lightweight container runtime written in Go, inspired by Docker.",
+  },
+  {
+    name: "proxygo",
+    url: "https://github.com/prasadf18/proxygo",
+    text: "A lightweight reverse proxy built in Go.",
+  },
+  {
+    name: "Orbit",
+    url: "https://github.com/prasadf18/Orbit",
+    text: "A secure ephemeral cloud compute engine that spins up isolated execution environments on demand using Docker.",
+  },
+];
 ---
 
 <Layout title="Research">
+  <h1>research</h1>
 
-  <h1>Research & Experiments</h1>
-
-  <p style="opacity: 0.8; max-width: 750px;">
-    I explore AI, machine learning, and distributed systems by rebuilding core research papers and systems from scratch.
-    The goal is not just to use libraries, but to understand how real systems behave under the hood.
+  <p class="intro">
+    I write up things I dig into to understand how systems work one level down. The notes live in a GitHub repo, and the proofs of concept I build along the way are listed below.
   </p>
 
-  <section class="featured">
-    <p class="post-date">latest deep dive · 2026-11-20</p>
-    <h2><a href="/blog/postgres-notify-global-lock/">The one lock hiding behind Postgres LISTEN/NOTIFY</a></h2>
-    <p>
-      Two well-known write-ups disagree on whether LISTEN/NOTIFY scales. I read both, plus the docs, to find out why one global lock sits in the commit path, what batching does about it, and what is still unclear.
-    </p>
-  </section>
-
-  <!-- ========================= -->
-  <!-- AI / ML PAPERS -->
-  <!-- ========================= -->
-
-  <section style="margin-top: 40px;">
-    <h2>AI / ML Core Papers</h2>
-
-    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
-
-      <div style="padding: 16px; border: 1px solid #e4e4e7; border-radius: 10px;">
-        <h3>Attention Is All You Need (Transformer)</h3>
-        <p>Rebuilt scaled dot-product attention and multi-head mechanism to understand token interactions and context learning.</p>
-        <a href="https://github.com/yourusername/transformer" target="_blank">GitHub</a>
-      </div>
-
-      <div style="padding: 16px; border: 1px solid #e4e4e7; border-radius: 10px;">
-        <h3>BERT: Masked Language Modeling</h3>
-        <p>Implemented masked language modeling to understand bidirectional context learning in transformer models.</p>
-        <a href="https://github.com/yourusername/bert-mlm" target="_blank">GitHub</a>
-      </div>
-
-      <div style="padding: 16px; border: 1px solid #e4e4e7; border-radius: 10px;">
-        <h3>CLIP (Vision + Language Alignment)</h3>
-        <p>Built contrastive learning pipeline for aligning image and text embeddings into a shared semantic space.</p>
-        <a href="https://github.com/yourusername/clip-experiments" target="_blank">GitHub</a>
-      </div>
-
-      <div style="padding: 16px; border: 1px solid #e4e4e7; border-radius: 10px;">
-        <h3>Batch Normalization</h3>
-        <p>Reimplemented normalization layers to understand training stability in deep neural networks.</p>
-        <a href="https://github.com/yourusername/batchnorm" target="_blank">GitHub</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================= -->
-  <!-- RETRIEVAL SYSTEMS -->
-  <!-- ========================= -->
-
-  <section style="margin-top: 50px;">
-    <h2>Retrieval & Search Systems</h2>
-
-    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
-
-      <div style="padding: 16px; border: 1px solid #e4e4e7; border-radius: 10px;">
-        <h3>FAISS / Vector Search Engine</h3>
-        <p>Built approximate nearest neighbor search system for high-dimensional embeddings and semantic retrieval.</p>
-        <img src="https://placehold.co/900x400" style="width:100%; border-radius:8px; margin-top:10px;" />
-        <a href="https://github.com/yourusername/vector-search" target="_blank">GitHub</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================= -->
-  <!-- DISTRIBUTED SYSTEMS -->
-  <!-- ========================= -->
-
-  <section style="margin-top: 50px;">
-    <h2>Distributed Systems (Go / Java)</h2>
-
-    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
-
-      <div style="padding: 16px; border: 1px solid #e4e4e7; border-radius: 10px;">
-        <h3>MapReduce (Google Paper)</h3>
-        <p>Reimplemented simplified MapReduce pipeline using Go routines to simulate distributed computation.</p>
-        <p style="opacity: 0.7;">Go: goroutines, worker pools, channel-based reducers</p>
-        <a href="https://github.com/yourusername/mapreduce-go" target="_blank">GitHub</a>
-      </div>
-
-      <div style="padding: 16px; border: 1px solid #e4e4e7; border-radius: 10px;">
-        <h3>Raft Consensus Algorithm</h3>
-        <p>Simulated leader election, log replication, and fault-tolerant distributed state machine.</p>
-        <p style="opacity: 0.7;">Go / Java: concurrency, state machines, election timers</p>
-        <a href="https://github.com/yourusername/raft" target="_blank">GitHub</a>
-      </div>
-
-      <div style="padding: 16px; border: 1px solid #e4e4e7; border-radius: 10px;">
-        <h3>Kafka-style Event Log System</h3>
-        <p>Built append-only log system to understand streaming architecture and durability guarantees.</p>
-        <p style="opacity: 0.7;">Go: producers, consumers, persistent logs</p>
-        <a href="https://github.com/yourusername/event-log" target="_blank">GitHub</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================= -->
-  <!-- SYSTEM DESIGN CORE -->
-  <!-- ========================= -->
-
-  <section style="margin-top: 50px;">
-    <h2>Systems & Storage Engines</h2>
-
-    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
-
-      <div style="padding: 16px; border: 1px solid #e4e4e7; border-radius: 10px;">
-        <h3>LSM Tree (Storage Engine)</h3>
-        <p>Implemented log-structured merge tree to understand write-heavy database design (LevelDB-style systems).</p>
-        <a href="https://github.com/yourusername/lsm-tree" target="_blank">GitHub</a>
-      </div>
-
-      <div style="padding: 16px; border: 1px solid #e4e4e7; border-radius: 10px;">
-        <h3>In-Memory KV Store (Redis-like)</h3>
-        <p>Built key-value store with TTL, caching, and eviction policies for understanding backend systems.</p>
-        <p style="opacity: 0.7;">Java: concurrency, caching, thread-safe storage</p>
-        <a href="https://github.com/yourusername/kv-store" target="_blank">GitHub</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================= -->
-  <!-- EXPERIMENTS -->
-  <!-- ========================= -->
-
-  <section style="margin-top: 50px;">
-    <h2>Experiments</h2>
-
-    <div style="padding: 16px; border: 1px solid #e4e4e7; border-radius: 10px;">
-      <h3>OCR + Video Frame Intelligence (FrameIQ)</h3>
+  <section>
+    <h2>research</h2>
+    <div class="card">
+      <p class="post-date">2026-11-20</p>
+      <h3><a href="https://github.com/prasadf18/research/tree/main/postgres-listen-notify">The one lock hiding behind Postgres LISTEN/NOTIFY</a></h3>
       <p>
-        Extracted video frames and built OCR + captioning pipeline to enable interaction with video content.
+        Two well-known write-ups disagree on whether LISTEN/NOTIFY scales. I read both, plus the docs, to find out why one global lock sits in the commit path, what batching does about it, and what is still unclear.
       </p>
-
-      <img src="https://placehold.co/900x400" style="width:100%; border-radius:8px; margin-top:10px;" />
-
-      <a href="https://github.com/yourusername/frameiq" target="_blank">GitHub</a>
+      <p>
+        <a href="https://github.com/prasadf18/research">research repo</a>
+        ·
+        <a href="/blog/postgres-notify-global-lock/">read it here</a>
+      </p>
     </div>
-
   </section>
 
+  <section>
+    <h2>proofs of concept</h2>
+    <div class="cards">
+      {pocs.map((p) => (
+        <div class="card">
+          <h3><a href={p.url} target="_blank" rel="noopener">{p.name}</a></h3>
+          <p>{p.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
 </Layout>
+
+<style>
+.intro {
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+section {
+  margin-bottom: 2.25rem;
+}
+
+section h2 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0 0 0.6rem;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  margin: 0.15rem 0 0.4rem;
+}
+
+.card p {
+  margin: 0 0 0.5rem;
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+</style>
