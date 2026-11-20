@@ -1,6 +1,7 @@
 ---
 title: "A Year in Review: From Breadth to Depth"
 date: 2026-11-09
+category: "personal"
 ---
 
 A year ago someone suggested I start writing. I put it off. I told myself I had little to say, and I spent more time thinking about it than doing it. This post is my reflection on the past year and what I'm focusing on next.

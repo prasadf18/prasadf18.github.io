@@ -6,33 +6,82 @@ const posts = await getCollection("blog");
 
 // latest first
 posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const technical = posts.filter((p) => p.data.category === "technical");
+const personal = posts.filter((p) => p.data.category === "personal");
+
+const sections = [
+  {
+    title: "technical blogs",
+    note: "databases, systems and things I'm building",
+    items: technical,
+  },
+  {
+    title: "personal blog",
+    note: "trips, movies and anything else I feel like writing about",
+    items: personal,
+  },
+];
 ---
 
 <Layout title="Blogs">
+  <h1>blogs</h1>
 
-  <div id="main-content">
-
-    <h1 style="font-size:1.6rem; margin-bottom:2rem;">
-      blogs
-    </h1>
-
-    {posts.map((post) => (
-      <p style="margin-bottom:1rem;">
-        <span class="post-date">
-          {post.data.date.toISOString().slice(0, 10)}
-        </span>
-
-        {" "}
-
-        <a
-          href={`/blog/${post.id.replace(".md", "")}/`}
-          class="slash-link hover-sound"
-        >
-          {post.data.title}
-        </a>
-      </p>
-    ))}
-
-  </div>
-
+  {sections.map((s) => (
+    <section>
+      <h2>{s.title}</h2>
+      <p class="note">{s.note}</p>
+      <ul>
+        {s.items.map((post) => (
+          <li>
+            <span class="post-date">{post.data.date.toISOString().slice(0, 10)}</span>
+            <a href={`/blog/${post.id.replace(".md", "")}/`}>{post.data.title}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
 </Layout>
+
+<style>
+section {
+  margin-bottom: 2.25rem;
+}
+
+section h2 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0 0 0.2rem;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 0.8rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  gap: 0.9rem;
+  margin-bottom: 0.45rem;
+}
+
+.post-date {
+  flex: 0 0 5.8rem;
+}
+
+@media (max-width: 480px) {
+  li {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+</style>
