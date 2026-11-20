@@ -15,27 +15,26 @@ const initialAge = ((Date.now() - new Date(born).getTime()) / YEAR_MS).toFixed(9
 const years = [
   {
     year: "2027",
-    text: "The goal is to make my first $1,000 on the internet and understand how internet money works. I'll launch a bunch of apps and write about each one as I build it, including the parts that don't work. I also want to level up as a content creator: post more, do a lot more video editing, and share the whole journey.",
+    text: "Make my first $1,000 on the internet and learn how internet money works. Launch a bunch of apps, write about each one, and level up my content with more posting and a lot more video editing.",
   },
   {
     year: "2026",
-    text: "I had been thinking about starting something of my own for a while, and this year I did. I started ACE Labs, a small product building firm. I met a lot of other builders, started building, and started writing up my research. These days I'm focused on indie hacking.",
+    text: "I started ACE Labs, a small product building firm. I met a lot of builders, started building and writing up my research. Now I'm focused on indie hacking.",
   },
   {
     year: "2025",
-    text: "I kept at it as a full-stack developer, picked up Python and AI agents with voice, and spent more time in builder and open source communities. I also went to a few meetups in Pune run by mitramandal.ai, an AI meetup where engineers share how they use AI in real work. I met a couple of friends there. I went often at first, then stopped going to every one after a while.",
-    link: { href: "https://mitramandal.ai/", label: "mitramandal.ai" },
+    text: "I kept at it as a full-stack developer and picked up Python and AI agents with voice. I went to a few <a href=\"https://mitramandal.ai/\" target=\"_blank\" rel=\"noopener\">mitramandal.ai</a> meetups in Pune and met a couple of friends there, though I stopped going to every one after a while.",
     image: "/images/mitramandal-meetup.jpg",
-    imageAlt: "A group photo of attendees at a mitramandal.ai meetup in Pune, with Prasad circled in blue near the back",
-    caption: "At a mitramandal.ai meetup in Pune. I'm in the blue circle.",
+    imageAlt: "Group photo at a mitramandal.ai meetup in Pune, with Prasad circled in blue near the back",
+    caption: "mitramandal.ai meetup, I'm in the blue circle",
   },
   {
     year: "2024",
-    text: "I got my first internship and it turned into a full-time job. Since then I've worked as a full-stack developer on SaaS and enterprise applications.",
+    text: "I got my first internship and it turned into a full-time job. Since then I've worked as a full-stack developer on SaaS and enterprise apps.",
   },
   {
     year: "2023",
-    text: "I spent the year in pop-up Discord servers. I was into buildspace but couldn't build anything yet. I was learning and trying to understand the ecosystem.",
+    text: "I spent the year in pop-up Discord servers. I was into buildspace but couldn't build yet, so I was learning the ecosystem.",
   },
 ];
 ---
@@ -85,13 +84,12 @@ const years = [
         <li>
           <span class="year">{y.year}</span>
           <div>
-            <p>{y.text}</p>
-            {y.link && <p><a href={y.link.href} target="_blank" rel="noopener">{y.link.label}</a></p>}
+            <p set:html={y.text} />
             {y.image && (
-              <figure class="photo">
+              <a class="thumb" href={y.image} target="_blank" rel="noopener" title="Open full photo">
                 <img src={y.image} alt={y.imageAlt} loading="lazy" />
-                <figcaption>{y.caption}</figcaption>
-              </figure>
+                <span>{y.caption}</span>
+              </a>
             )}
           </div>
         </li>
@@ -207,16 +205,22 @@ section h2 {
   margin: 0 0 0.5rem;
 }
 
-.timeline .photo {
-  margin: 0.75rem 0 0;
-  padding: 0.5rem;
+.timeline .thumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: none;
 }
 
-.timeline .photo img {
-  display: block;
-  width: 100%;
-  height: auto;
+.timeline .thumb img {
+  width: 96px;
+  height: 64px;
+  object-fit: cover;
   border-radius: 6px;
+  border: 1px solid var(--line);
 }
 
 .posts li {
