@@ -54,14 +54,12 @@ const years = [
   <section>
     <h2>my story</h2>
     <p>
-      I grew up in a small village where technology was not part of everyday life. I got curious about computers through movies and games, and then more curious about how they worked underneath. It took a while to turn that into a career.
+      I grew up in a small village where technology was not part of everyday life. Movies and games made me curious about computers, and then about how they work underneath. It took a while to turn that into a career.
     </p>
     <p>
-      Since then I've tried to be the kind of person who does the work in front of me properly, keeps learning in the open, and keeps building on the side. I like understanding how things work one level down, and I like shipping things people can use.
+      I try to do the work in front of me properly, keep learning in the open and keep building on the side. I'm also trying to be a kinder person every day.
     </p>
-    <p>
-      The longer version is <a href="/origin-story">here</a>.
-    </p>
+    <a class="button" href="/origin-story">read my full story</a>
   </section>
 
   <section>
@@ -144,6 +142,23 @@ const years = [
 </script>
 
 <style>
+.button {
+  display: inline-block;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--text);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.button:hover,
+.button:focus-visible {
+  background: var(--text);
+  color: var(--bg);
+}
+
 .since {
   color: var(--muted);
   font-size: 0.95rem;
