@@ -6,7 +6,11 @@ export const collection: { title: string; note: string; items: Item[] }[] = [
   {
     title: "anime",
     note: "what I watch",
-    items: [{ title: "Naruto" }],
+    items: [
+      { title: "Naruto" },
+      { title: "One Piece" },
+      { title: "Attack on Titan" },
+    ],
   },
   {
     title: "manga",
@@ -16,6 +20,10 @@ export const collection: { title: string; note: string; items: Item[] }[] = [
   {
     title: "manhwa",
     note: "Korean comics I read",
-    items: [],
+    items: [
+      { title: "Solo Leveling" },
+      { title: "Drawn Sword" },
+      { title: "Ataza" },
+    ],
   },
 ];
