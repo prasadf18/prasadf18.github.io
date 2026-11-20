@@ -1,0 +1,100 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { collection } from "../data/collection";
+---
+
+<Layout title="Collection">
+  <h1>collection</h1>
+  <p class="intro">Anime, manga and manhwa I like. I keep adding to this.</p>
+
+  {collection.map((group) => (
+    <section>
+      <h2>{group.title}</h2>
+      <p class="note">{group.note}</p>
+      {group.items.length > 0 ? (
+        <ul>
+          {group.items.map((item) => (
+            <li>
+              <span class="title">{item.title}</span>
+              {item.status && <span class="status">{item.status}</span>}
+              {item.note && <span class="item-note">{item.note}</span>}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="empty">coming soon</p>
+      )}
+    </section>
+  ))}
+
+  <p class="more">
+    More of what I keep: <a href="/quotes">quotes</a>, <a href="/bucket">bucket list</a>.
+  </p>
+</Layout>
+
+<style>
+.intro {
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+section h2 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0 0 0.2rem;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 0.7rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.title {
+  font-weight: 500;
+}
+
+.status {
+  font-size: 0.78rem;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+}
+
+.item-note {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.empty {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.more {
+  margin-top: 2.5rem;
+  color: var(--muted);
+}
+</style>
