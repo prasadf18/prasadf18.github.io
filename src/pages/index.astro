@@ -31,6 +31,11 @@ const years = [
   {
     year: "2024",
     text: "I got my first internship and it turned into a full-time job. Since then I've worked as a full-stack developer on SaaS and enterprise apps.",
+    card: {
+      href: "https://www.linkedin.com/feed/update/urn:li:share:7380230648441143296/",
+      title: "My LinkedIn post from a meetup",
+      note: "I met people who really inspired me, including a KDE legend.",
+    },
   },
   {
     year: "2023",
@@ -85,6 +90,12 @@ const years = [
           <span class="year">{y.year}</span>
           <div>
             <p set:html={y.text} />
+            {y.card && (
+              <a class="linkcard" href={y.card.href} target="_blank" rel="noopener">
+                <span class="linkcard-title">{y.card.title}</span>
+                <span class="linkcard-note">{y.card.note}</span>
+              </a>
+            )}
             {y.image && (
               <a class="thumb" href={y.image} target="_blank" rel="noopener" title="Open full photo">
                 <img src={y.image} alt={y.imageAlt} loading="lazy" />
@@ -204,6 +215,34 @@ section h2 {
 
 .timeline p {
   margin: 0 0 0.5rem;
+}
+
+.timeline .linkcard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  max-width: 24rem;
+  margin: 0.25rem 0 0.5rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid #0a66c2;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.timeline .linkcard:hover {
+  background: #fafafa;
+}
+
+.linkcard-title {
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.linkcard-note {
+  font-size: 0.82rem;
+  color: var(--muted);
 }
 
 .timeline .thumb {
