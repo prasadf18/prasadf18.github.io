@@ -18,16 +18,14 @@ export const collection: { title: string; note: string; items: Item[] }[] = [
   {
     title: "manga",
     note: "what I read",
-    items: [
-      { title: "Vagabond" },
-      { title: "Elseid" },
-    ],
+    items: [{ title: "Vagabond" }],
   },
   {
     title: "manhwa",
     note: "Korean comics I read",
     items: [
       { title: "Solo Leveling" },
+      { title: "Eleceed" },
       { title: "Drawn Sword" },
       { title: "Ataza" },
     ],
