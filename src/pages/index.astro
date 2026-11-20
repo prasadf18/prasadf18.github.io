@@ -23,7 +23,11 @@ const years = [
   },
   {
     year: "2025",
-    text: "I kept at it as a full-stack developer, picked up Python and AI agents with voice, and spent more time in builder and open source communities.",
+    text: "I kept at it as a full-stack developer, picked up Python and AI agents with voice, and spent more time in builder and open source communities. I also went to a few meetups in Pune run by mitramandal.ai, an AI meetup where engineers share how they use AI in real work. I met a couple of friends there. I went often at first, then stopped going to every one after a while.",
+    link: { href: "https://mitramandal.ai/", label: "mitramandal.ai" },
+    image: "/images/mitramandal-meetup.jpg",
+    imageAlt: "A group photo of attendees at a mitramandal.ai meetup in Pune, with Prasad circled in blue near the back",
+    caption: "At a mitramandal.ai meetup in Pune. I'm in the blue circle.",
   },
   {
     year: "2024",
@@ -80,7 +84,16 @@ const years = [
       {years.map((y) => (
         <li>
           <span class="year">{y.year}</span>
-          <p>{y.text}</p>
+          <div>
+            <p>{y.text}</p>
+            {y.link && <p><a href={y.link.href} target="_blank" rel="noopener">{y.link.label}</a></p>}
+            {y.image && (
+              <figure class="photo">
+                <img src={y.image} alt={y.imageAlt} loading="lazy" />
+                <figcaption>{y.caption}</figcaption>
+              </figure>
+            )}
+          </div>
         </li>
       ))}
     </ol>
@@ -191,7 +204,19 @@ section h2 {
 }
 
 .timeline p {
-  margin: 0;
+  margin: 0 0 0.5rem;
+}
+
+.timeline .photo {
+  margin: 0.75rem 0 0;
+  padding: 0.5rem;
+}
+
+.timeline .photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
 }
 
 .posts li {
