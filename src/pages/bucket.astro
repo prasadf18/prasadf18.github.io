@@ -1,68 +1,96 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+// Edit this list to change the bucket list. Set done: true to tick an item.
+const groups = [
+  {
+    title: "body",
+    note: "I want to be in the best shape of my life",
+    items: [
+      { text: "Reach my peak physique", done: false },
+      { text: "Try some extreme athlete challenges", done: false },
+    ],
+  },
+  {
+    title: "adventure",
+    note: "I like going places and doing things that scare me a little",
+    items: [
+      { text: "Do my first Himalayan trek (Hampta Pass)", done: true },
+      { text: "Visit New York", done: false },
+      { text: "Travel Europe, multiple countries", done: false },
+      { text: "Travel to New Zealand and Antarctica", done: false },
+    ],
+  },
+  {
+    title: "building",
+    note: "things I want to make and prove to myself",
+    items: [
+      { text: "Win 10 hackathons", done: false },
+      { text: "Make my first $1,000 on the internet", done: false },
+      { text: "Found my own startup", done: false },
+      { text: "Work abroad", done: false },
+    ],
+  },
+  {
+    title: "people and purpose",
+    note: "the part I'm still working out",
+    items: [
+      { text: "Find my ikigai and figure out what my purpose is", done: false },
+      { text: "Find ways to help people, in a way that lasts", done: false },
+      { text: "Be a kinder person every day", done: false },
+    ],
+  },
+];
 ---
 
 <Layout title="Bucket List">
+  <h1>bucket list</h1>
+  <p class="intro">things I want to do in my lifetime. I'll keep editing this as I learn more about what matters to me.</p>
 
-  <div id="main-content">
-
-    <h1>bucket list</h1>
-
-    <p class="post-date">
-      things I want to do in my lifetime
-    </p>
-
-    <div class="bucket-box">
-
-      <label class="bucket-item">
-        <input type="checkbox" />
-        Win 10 hackathons
-      </label>
-
-
-      <label class="bucket-item">
-        <input type="checkbox" />
-        Work abroad
-      </label>
-
-      <label class="bucket-item">
-        <input type="checkbox" />
-        Visit New York
-      </label>
-
-       <label class="bucket-item">
-        <input type="checkbox" />
-        Found my own startup
-      </label>
-
-      <label class="bucket-item">
-        <input type="checkbox" />
-        Travel Europe (multiple countries)
-      </label>
-
-      <label class="bucket-item">
-        <input type="checkbox" />
-        Travel to New Zealand & Antarctica
-      </label>
-
-    </div>
-
-  </div>
-
+  {groups.map((g) => (
+    <section>
+      <h2>{g.title}</h2>
+      <p class="note">{g.note}</p>
+      <div class="bucket-box">
+        {g.items.map((item) => (
+          <label class="bucket-item">
+            <input type="checkbox" checked={item.done} disabled />
+            <span class:list={[{ done: item.done }]}>{item.text}</span>
+          </label>
+        ))}
+      </div>
+    </section>
+  ))}
 </Layout>
 
 <style>
+.intro {
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
 
-#main-content {
-  max-width: 800px;
-  margin: 0 auto;
+section {
+  margin-bottom: 2rem;
+}
+
+section h2 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0 0 0.2rem;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 0.7rem;
 }
 
 .bucket-box {
-  margin-top: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .bucket-item {
@@ -70,20 +98,17 @@ import Layout from "../layouts/Layout.astro";
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  border: 1px solid #e4e4e7;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: transform 0.15s ease, background 0.15s ease;
-}
-
-.bucket-item:hover {
-  transform: translateX(3px);
-  background: #fafafa;
+  border: 1px solid var(--line);
+  border-radius: 8px;
 }
 
 .bucket-item input {
-  accent-color: #a8a29e;
+  accent-color: #52525b;
   transform: scale(1.1);
 }
 
+.done {
+  color: var(--muted);
+  text-decoration: line-through;
+}
 </style>
