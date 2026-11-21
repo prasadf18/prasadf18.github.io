@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 
 const posts = await getCollection("blog");
 posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const latestPosts = posts.slice(0, 3);
+const latestPosts = posts.slice(0, 5);
 
 // Used for the "been here since" counter.
 const born = "2003-03-18T00:00:00Z";
@@ -15,15 +15,15 @@ const initialAge = ((Date.now() - new Date(born).getTime()) / YEAR_MS).toFixed(9
 const years = [
   {
     year: "2027",
-    text: "First $1,000 online, a bunch of apps, more video, a first tech talk, and open source with <a href=\"https://traefik.io/\" target=\"_blank\" rel=\"noopener\">Traefik Labs</a>.",
+    text: "Make my first $1,000 on the internet and learn how internet money works. Launch a bunch of apps, write about each one, and level up my content with more posting and a lot more video editing. Give my first technical talk, maybe an international one. Give back to the community and contribute a lot to open source, especially <a href=\"https://traefik.io/\" target=\"_blank\" rel=\"noopener\">Traefik Labs</a>, and work toward becoming a maintainer.",
   },
   {
     year: "2026",
-    text: "Started ACE Labs, my side lab. Met builders, wrote up my research, shipped small things.",
+    text: "I started ACE Labs, my side lab for building products, while keeping my day job going. I met a lot of builders, started building and writing up my research. Now I'm deep into indie hacking, one small project at a time.",
   },
   {
     year: "2025",
-    text: "Picked up Python, bought Claude Code, built a couple of agents, and went to <a href=\"https://mitramandal.ai/\" target=\"_blank\" rel=\"noopener\">mitramandal.ai</a> meetups in Pune.",
+    text: "I kept at it as a full-stack developer and picked up Python. I started using Claude Code, which I bought with my own money, and built a couple of agents. I went to a few <a href=\"https://mitramandal.ai/\" target=\"_blank\" rel=\"noopener\">mitramandal.ai</a> meetups in Pune and met a couple of friends there, though I stopped going to every one after a while.",
     card: {
       href: "https://www.linkedin.com/feed/update/urn:li:share:7380230648441143296/",
       title: "My LinkedIn post from a meetup",
@@ -35,11 +35,11 @@ const years = [
   },
   {
     year: "2024",
-    text: "First internship, then a full-time job. Learned clean code and teamwork. Collaboration was the biggest lesson.",
+    text: "I got my first internship and it turned into a full-time job. Since then I've worked as a full-stack developer on SaaS and enterprise apps. I learned clean code, how enterprise software is managed, how to work in a team and how to guide interns. Collaboration was the biggest lesson, along with how organizations run and the processes behind them, even at a small company.",
   },
   {
     year: "2023",
-    text: "Lived in pop-up Discord servers, learned the builder world, and DMed a lot of random people.",
+    text: "I spent the year in pop-up Discord servers. I was into buildspace but couldn't build yet, so I was learning the ecosystem. I spent a lot of time DMing random people and talking with them. I really like meeting new people, and I still do it sometimes.",
   },
 ];
 ---
@@ -52,40 +52,34 @@ const years = [
       been here since <span id="age" data-born={born} title="and counting">{initialAge}</span> years.
     </p>
     <p>
-      Databases, distributed systems and AI agents. I travel and write when the mood strikes.
+      I'm an engineer, a curious problem solver and a continuous learner. I like databases, distributed systems and AI agents. I also like to travel, and I write when the mood strikes.
     </p>
   </header>
 
   <section>
     <h2>my story</h2>
     <p>
-      I grew up in a small village, got curious about computers through movies and games, and I'm still trying to be a kinder person every day. <a href="/origin-story">The longer version</a>.
+      I grew up in a small village where technology was not part of everyday life. Movies and games made me curious about computers, and then about how they work underneath. It took a while to turn that into a career.
+    </p>
+    <p>
+      I try to do the work in front of me properly, keep learning in the open and keep building on the side. I'm also trying to be a kinder person every day.
+    </p>
+    <p>
+      The longer version is <a href="/origin-story">here</a>.
     </p>
   </section>
 
   <section>
     <h2>right now</h2>
     <p>
-      Building small apps on my own time through <a href="https://acelabs-hq.github.io/acelabs/">ACE Labs</a>, going deep on databases, and chasing my first $1,000 online.
+      I haven't built anything yet that I'd call finished, but I'm building right now. I'm making small apps on my own time, going deep on databases, and writing down what I learn as I go, including what doesn't work. Some of that happens through <a href="https://acelabs-hq.github.io/acelabs/">ACE Labs</a>, which I run independently of my day job.
     </p>
-  </section>
-
-  <section>
-    <h2>what I aspire to</h2>
     <p>
-      Two rocket boosters flying back and landing upright, side by side. That is the kind of engineer I want to become: someone who builds what people call impossible and makes it work.
+      I'm starting a personal blog and a YouTube channel about my lifestyle. I also want to make my first $1,000 on the internet, mostly to understand how internet money actually works. Along the way I'm going to put a lot more into content: writing, posting about what I build, and learning video editing.
     </p>
-    <div class="video">
-      <iframe
-        src="https://www.youtube-nocookie.com/embed/HVqWEoyiaBA"
-        title="Falcon Heavy launch and booster landings, from CNN"
-        loading="lazy"
-        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen
-      ></iframe>
-    </div>
-    <p class="note">Falcon Heavy launch and booster landings, video by CNN.</p>
+    <p>
+      My latest deep dive is on <a href="/blog/postgres-notify-global-lock/">the lock hiding behind Postgres LISTEN/NOTIFY</a>.
+    </p>
   </section>
 
   <section>
@@ -130,11 +124,11 @@ const years = [
   <section>
     <h2>collection</h2>
     <p>
-      <a href="/collection">anime and manga</a> ·
-      <a href="/quotes">quotes</a> ·
-      <a href="/bucket">bucket list</a> ·
-      <a href="/research">research</a> ·
-      <a href="https://myanimelist.net/profile/acef18" target="_blank" rel="noopener">my list</a>
+      The <a href="/collection">anime, manga and manhwa</a> I like, and other things I keep around:
+      <a href="/quotes">quotes</a>,
+      <a href="/bucket">bucket list</a>,
+      <a href="/research">research</a>.
+      You can find more details in <a href="https://myanimelist.net/profile/acef18" target="_blank" rel="noopener">my list</a>.
     </p>
   </section>
 
@@ -199,30 +193,6 @@ section h2 {
   letter-spacing: 0.06em;
   color: var(--muted);
   margin: 0 0 0.6rem;
-}
-
-.video {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  max-width: 36rem;
-  margin: 0.75rem 0 0.4rem;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.video iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-.note {
-  color: var(--muted);
-  font-size: 0.85rem;
-  margin: 0;
 }
 
 .timeline,
