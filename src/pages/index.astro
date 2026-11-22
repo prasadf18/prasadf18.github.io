@@ -4,7 +4,8 @@ import { getCollection } from "astro:content";
 
 const posts = await getCollection("blog");
 posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const latestPosts = posts.slice(0, 5);
+// Home shows personal posts only. Technical notes live on /technical.
+const latestPosts = posts.filter((p) => p.data.category === "personal").slice(0, 5);
 
 // Used for the "been here since" counter.
 const born = "2003-03-18T00:00:00Z";
@@ -64,13 +65,10 @@ const years = [
   <section>
     <h2>right now</h2>
     <p>
-      I haven't built anything yet that I'd call finished, but I'm building right now. I'm making small apps on my own time, going deep on databases, and writing down what I learn as I go, including what doesn't work. Some of that happens through <a href="https://acelabs-hq.github.io/acelabs/">ACE Labs</a>, which I run independently of my day job.
+      I haven't built anything yet that I'd call finished, but I'm building right now. I make small apps on my own time and write down what I learn, including what doesn't work. Some of that happens through <a href="https://acelabs-hq.github.io/acelabs/">ACE Labs</a>, which I run independently of my day job.
     </p>
     <p>
-      I'm starting a personal blog and a YouTube channel about my lifestyle. I also want to make my first $1,000 on the internet, mostly to understand how internet money actually works. Along the way I'm going to put a lot more into content: writing, posting about what I build, and learning video editing.
-    </p>
-    <p>
-      My latest deep dive is on <a href="/blog/postgres-notify-global-lock/">the lock hiding behind Postgres LISTEN/NOTIFY</a>.
+      I'm starting a personal blog and a YouTube channel about my lifestyle. I also want to make my first $1,000 on the internet, mostly to understand how internet money actually works.
     </p>
   </section>
 
@@ -110,17 +108,13 @@ const years = [
         </li>
       ))}
     </ul>
-    <p><a href="/blogs">all posts</a></p>
+    <p><a href="/blogs">all posts</a> · <a href="/technical">technical notes</a></p>
   </section>
 
   <section>
     <h2>collection</h2>
     <p>
-      The <a href="/collection">anime, manga and manhwa</a> I like, and other things I keep around:
-      <a href="/quotes">quotes</a>,
-      <a href="/bucket">bucket list</a>,
-      <a href="/research">research</a>.
-      You can find more details in <a href="https://myanimelist.net/profile/acef18" target="_blank" rel="noopener">my list</a>.
+      The <a href="/collection">anime, manga and other things</a> I keep around.
     </p>
   </section>
 

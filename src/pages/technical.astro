@@ -1,0 +1,55 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((p) => p.data.category === "technical")
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="Technical notes">
+  <h1>technical notes</h1>
+  <p class="note">databases, systems and things I'm building</p>
+
+  <ul>
+    {posts.map((post) => (
+      <li>
+        <span class="post-date">{post.data.date.toISOString().slice(0, 10)}</span>
+        <a href={`/blog/${post.id.replace(".md", "")}/`}>{post.data.title}</a>
+      </li>
+    ))}
+  </ul>
+
+  <p><a href="/blogs">personal blog</a></p>
+</Layout>
+
+<style>
+.note {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 1.2rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  gap: 0.9rem;
+  margin-bottom: 0.45rem;
+}
+
+.post-date {
+  flex: 0 0 5.8rem;
+}
+
+@media (max-width: 480px) {
+  li {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+</style>

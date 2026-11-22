@@ -7,15 +7,9 @@ const posts = await getCollection("blog");
 // latest first
 posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const technical = posts.filter((p) => p.data.category === "technical");
 const personal = posts.filter((p) => p.data.category === "personal");
 
 const sections = [
-  {
-    title: "technical blogs",
-    note: "databases, systems and things I'm building",
-    items: technical,
-  },
   {
     title: "personal blog",
     note: "life, careers, money, trips, movies and anything else I feel like writing about",
@@ -41,6 +35,8 @@ const sections = [
       </ul>
     </section>
   ))}
+
+  <p><a href="/technical">technical notes</a></p>
 </Layout>
 
 <style>

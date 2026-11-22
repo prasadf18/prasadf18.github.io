@@ -5,7 +5,7 @@ import { getCollection } from "astro:content";
 export async function getStaticPaths() {
   const PAGE_SIZE = 20; // ✅ MOVE HERE (fixes runtime scope issue)
 
-  const posts = await getCollection("blog");
+  const posts = (await getCollection("blog")).filter((p) => p.data.category === "personal");
 
   posts.sort(
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
