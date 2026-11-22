@@ -1,6 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+// The bucket list is private for now. Set this to false to show the list again.
+const isPrivate = true;
+
 // Edit this list to change the bucket list. Set done: true to tick an item.
 const groups = [
   {
@@ -45,9 +48,17 @@ const groups = [
 
 <Layout title="Bucket List">
   <h1>bucket list</h1>
-  <p class="intro">things I want to do in my lifetime. I'll keep editing this as I learn more about what matters to me.</p>
+  {isPrivate && (
+    <p class="intro">
+      Disclaimer: this page is private for now. I have hidden my bucket list for the time being and may share it again later.
+    </p>
+  )}
 
-  {groups.map((g) => (
+  {!isPrivate && (
+    <p class="intro">things I want to do in my lifetime. I'll keep editing this as I learn more about what matters to me.</p>
+  )}
+
+  {!isPrivate && groups.map((g) => (
     <section>
       <h2>{g.title}</h2>
       <p class="note">{g.note}</p>
