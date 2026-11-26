@@ -15,6 +15,16 @@ const pageTitle = title === "Home" ? "Prasad Firame" : `${title} | Prasad Firame
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Caveat:wght@500&display=swap" rel="stylesheet">
+
+    <!-- apply the saved theme before paint so there is no flash -->
+    <script is:inline>
+      (() => {
+        let t = null;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t !== "dark" && t !== "light") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
   </head>
 
   <body>
@@ -33,6 +43,26 @@ const pageTitle = title === "Home" ? "Prasad Firame" : `${title} | Prasad Firame
   --muted: #71717a;
   --line: #e4e4e7;
   --accent: #2563eb;
+  --soft: #f4f4f5;
+  --card: #ffffff;
+  --hover: #fafafa;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f0f11;
+  --text: #e7e7ea;
+  --muted: #9b9ba4;
+  --line: #2b2b31;
+  --accent: #7aa2ff;
+  --soft: #1c1c21;
+  --card: #16161a;
+  --hover: #1a1a1f;
+  color-scheme: dark;
+}
+
+html, body {
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 * {
@@ -96,14 +126,14 @@ img {
 }
 
 code {
-  background: #f4f4f5;
+  background: var(--soft);
   padding: 0.1em 0.35em;
   border-radius: 4px;
   font-size: 0.9em;
 }
 
 pre {
-  background: #f4f4f5;
+  background: var(--soft);
   padding: 1rem;
   border-radius: 8px;
   overflow-x: auto;
@@ -140,7 +170,7 @@ figure {
   padding: 1rem;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: #fff;
+  background: var(--card);
 }
 
 figcaption {
