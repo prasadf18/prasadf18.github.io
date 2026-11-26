@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Known Worlds · every confirmed exoplanet, in 3D</title>
+<meta name="description" content="A 3D atlas of every confirmed exoplanet from the NASA Exoplanet Archive, the Solar System on today's date, the Milky Way and its neighbouring galaxies." />
+<style>
+  :root {
+    --ink: #eef1f6; --dim: rgba(225, 232, 245, 0.62); --faint: rgba(225, 232, 245, 0.35);
+    --warm: #ffd79a; --cool: #9fd8ff; --glass: rgba(10, 13, 22, 0.58); --line: rgba(255, 255, 255, 0.09);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: Inter, "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #000; color: var(--ink); font-family: var(--sans); overflow: hidden; }
+  canvas#scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+  button { font: inherit; color: inherit; }
+
+  /* loading */
+  #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #000; z-index: 50; transition: opacity 1.6s ease; }
+  #loading.done { opacity: 0; pointer-events: none; }
+  #loading .box { width: min(360px, 80vw); text-align: center; }
+  #loading .t { font-family: var(--serif); font-size: 15px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--dim); }
+  #loading .bar { height: 1px; background: var(--line); margin: 22px 0 14px; overflow: hidden; }
+  #loading .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--cool), var(--warm)); transition: width 0.6s ease; }
+  #loading .msg { font-size: 12px; color: var(--faint); letter-spacing: 0.04em; }
+
+  /* intro */
+  #intro { position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 clamp(24px, 7vw, 110px) clamp(40px, 11vh, 120px);
+    background: radial-gradient(ellipse at 20% 90%, rgba(0,0,0,0.75), transparent 60%), linear-gradient(0deg, rgba(0,0,0,0.65), transparent 55%);
+    opacity: 0; pointer-events: none; transition: opacity 1.4s ease; }
+  #intro.show { opacity: 1; pointer-events: auto; }
+  #intro .eyebrow { font-size: 11px; letter-spacing: 0.38em; text-transform: uppercase; color: var(--warm); margin-bottom: 18px; }
+  #intro h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 7.4vw, 104px); line-height: 0.95; margin: 0 0 22px; letter-spacing: -0.01em; }
+  #intro h1 em { font-style: italic; color: var(--warm); }
+  #intro p { max-width: 560px; font-size: clamp(15px, 1.25vw, 17px); line-height: 1.6; color: var(--dim); margin: 0 0 26px; }
+  #intro .stats { display: flex; gap: clamp(18px, 4vw, 54px); margin: 0 0 34px; flex-wrap: wrap; }
+  #intro .stats div { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); }
+  #intro .stats b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 3vw, 38px); letter-spacing: 0; color: var(--ink); text-transform: none; margin-bottom: 2px; }
+  #intro .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); padding: 13px 22px; border-radius: 999px; cursor: pointer; letter-spacing: 0.06em; font-size: 14px; transition: all .25s ease; backdrop-filter: blur(8px); }
+  .btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.4); }
+  .btn.primary { background: var(--ink); color: #05070c; border-color: var(--ink); }
+  .btn.primary:hover { background: #fff; box-shadow: 0 0 40px rgba(255, 220, 160, 0.35); }
+
+  /* hud chrome, hidden until the journey starts */
+  .chrome { opacity: 0; transition: opacity 1.2s ease 0.4s; pointer-events: none; }
+  body.live .chrome { opacity: 1; pointer-events: auto; }
+
+  #brand { position: fixed; top: 20px; left: 24px; z-index: 10; }
+  #brand a { color: inherit; text-decoration: none; }
+  #brand .name { font-family: var(--serif); font-size: 19px; letter-spacing: 0.02em; }
+  #brand .sub { font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--faint); margin-top: 3px; }
+
+  #crumbs { position: fixed; top: 22px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--faint); white-space: nowrap; }
+  #crumbs button { background: none; border: 0; padding: 4px 6px; cursor: pointer; color: var(--faint); letter-spacing: 0.06em; border-radius: 6px; }
+  #crumbs button:hover { color: var(--ink); background: rgba(255,255,255,0.06); }
+  #crumbs button.cur { color: var(--ink); }
+
+  #searchbox { position: fixed; top: 16px; right: 20px; z-index: 12; width: min(320px, 42vw); }
+  #search { width: 100%; background: var(--glass); border: 1px solid var(--line); border-radius: 999px; padding: 10px 16px 10px 38px; color: var(--ink); font: 14px var(--sans); outline: none; backdrop-filter: blur(14px); transition: border-color .2s; }
+  #search:focus { border-color: rgba(255,255,255,0.3); }
+  #searchbox svg { position: absolute; left: 14px; top: 11px; opacity: 0.5; }
+  #searchbox kbd { position: absolute; right: 12px; top: 9px; font: 11px var(--sans); color: var(--faint); border: 1px solid var(--line); padding: 1px 6px; border-radius: 4px; }
+  #results { margin-top: 6px; background: rgba(8, 10, 18, 0.88); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: none; backdrop-filter: blur(16px); }
+  #results.show { display: block; }
+  #results button { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 9px 14px; cursor: pointer; }
+  #results button.on, #results button:hover { background: rgba(255,255,255,0.07); }
+  #results b { font-weight: 500; font-size: 13.5px; display: block; }
+  #results small { color: var(--faint); font-size: 11.5px; }
+  #results .none { padding: 12px 14px; color: var(--faint); font-size: 13px; }
+
+  #info { position: fixed; right: 20px; top: 68px; z-index: 11; width: min(340px, calc(100vw - 40px)); max-height: calc(100vh - 170px); overflow: auto;
+    background: var(--glass); border: 1px solid var(--line); border-radius: 18px; padding: 22px 22px 18px; backdrop-filter: blur(18px);
+    opacity: 0; transform: translateX(12px); transition: opacity .45s ease, transform .45s ease; pointer-events: none; scrollbar-width: thin; }
+  #info.show { opacity: 1; transform: none; pointer-events: auto; }
+  #info .close { position: absolute; top: 10px; right: 12px; background: none; border: 0; font-size: 20px; color: var(--faint); cursor: pointer; }
+  #info .kicker { font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm); margin-bottom: 8px; padding-right: 20px; line-height: 1.5; }
+  #info h2 { font-family: var(--serif); font-weight: 400; font-size: 28px; margin: 0 0 10px; line-height: 1.1; }
+  #info p { font-size: 13.5px; line-height: 1.55; color: var(--dim); margin: 0 0 14px; }
+  #info p.src { font-size: 11px; color: var(--faint); margin: 12px 0 0; }
+  #info dl { display: grid; grid-template-columns: auto 1fr; gap: 7px 14px; margin: 4px 0 6px; font-size: 12.5px; }
+  #info dt { color: var(--faint); }
+  #info dd { margin: 0; text-align: right; }
+  #info .list { margin: 14px 0 4px; display: flex; flex-direction: column; gap: 2px; border-top: 1px solid var(--line); padding-top: 10px; }
+  #info .pl { display: flex; align-items: center; gap: 10px; background: none; border: 0; text-align: left; padding: 6px 8px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+  #info .pl:hover { background: rgba(255,255,255,0.07); }
+  #info .pl.moon { padding-left: 26px; font-size: 12px; color: var(--dim); }
+  #info .pl em { margin-left: auto; font-style: normal; color: var(--faint); font-size: 11.5px; }
+  #info .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cool); flex: none; box-shadow: 0 0 8px currentColor; }
+  #info .actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  #info .actions button { flex: 1; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.05); border-radius: 999px; padding: 9px 12px; cursor: pointer; font-size: 12.5px; white-space: nowrap; }
+  #info .actions button:hover { background: rgba(255,255,255,0.12); }
+  #info .actions button.primary { background: var(--ink); color: #05070c; }
+
+  #time { position: fixed; left: 24px; bottom: 22px; z-index: 10; display: flex; align-items: center; gap: 4px; background: var(--glass); border: 1px solid var(--line); border-radius: 999px; padding: 5px 6px 5px 16px; backdrop-filter: blur(14px); font-size: 12px;
+    opacity: 0; transform: translateY(8px); transition: opacity .5s, transform .5s; pointer-events: none; }
+  body.live #time.show { opacity: 1; transform: none; pointer-events: auto; }
+  #date { font-variant-numeric: tabular-nums; margin-right: 10px; letter-spacing: 0.03em; }
+  #warp { color: var(--warm); min-width: 82px; text-align: center; }
+  #time button { background: none; border: 0; width: 30px; height: 28px; border-radius: 999px; cursor: pointer; color: var(--dim); }
+  #time button:hover { background: rgba(255,255,255,0.1); color: var(--ink); }
+  #time button.now { width: auto; padding: 0 12px; border: 1px solid var(--line); margin-left: 4px; }
+
+  #scale { position: fixed; left: 50%; transform: translateX(-50%); bottom: 26px; z-index: 9; font-size: 11.5px; letter-spacing: 0.08em; color: var(--faint); white-space: nowrap; }
+
+  #toggles { position: fixed; right: 20px; bottom: 20px; z-index: 10; }
+  #toggles summary { list-style: none; cursor: pointer; font-size: 12px; letter-spacing: 0.08em; color: var(--dim); background: var(--glass); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; backdrop-filter: blur(14px); text-align: right; }
+  #toggles summary::-webkit-details-marker { display: none; }
+  #toggles[open] summary { margin-top: 8px; }
+  #toggles .opts { display: grid; gap: 7px; background: var(--glass); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; backdrop-filter: blur(14px); font-size: 12.5px; color: var(--dim); }
+  #toggles details { display: flex; flex-direction: column-reverse; }
+  #toggles label { display: flex; align-items: center; gap: 9px; cursor: pointer; }
+  #toggles input { accent-color: #9fd8ff; }
+
+  #hint { position: fixed; left: 24px; top: 74px; z-index: 9; font-size: 11.5px; color: var(--faint); line-height: 1.7; }
+
+  /* labels drawn over the 3D scene */
+  #labels { position: fixed; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
+  .lbl { position: absolute; left: 0; top: 0; white-space: nowrap; font-size: 11.5px; letter-spacing: 0.04em; color: rgba(230, 236, 248, 0.78); text-shadow: 0 0 6px #000, 0 0 2px #000; will-change: transform; display: none; }
+  .lbl-galaxy { font-family: var(--serif); font-style: italic; font-size: 13.5px; color: rgba(255, 228, 190, 0.85); }
+  .lbl-host { color: rgba(170, 220, 255, 0.9); }
+  .lbl-planet { font-size: 12.5px; color: rgba(240, 244, 252, 0.95); }
+  .lbl-moon { font-size: 10.5px; color: rgba(220, 226, 240, 0.62); }
+  .lbl-star { font-size: 10.5px; color: rgba(230, 236, 248, 0.5); }
+  .lbl-sun { color: var(--warm); font-size: 12px; }
+  .lbl-ring { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(150, 190, 255, 0.55); }
+  .lbl-place { font-family: var(--serif); font-style: italic; color: rgba(255, 210, 170, 0.75); }
+  .lbl-sel { color: #fff; font-size: 13px; font-weight: 500; }
+
+  #tooltip { position: fixed; left: 0; top: 0; z-index: 15; pointer-events: none; background: rgba(6, 8, 14, 0.85); border: 1px solid var(--line); padding: 5px 10px; border-radius: 8px; font-size: 12px; opacity: 0; transition: opacity .15s; white-space: nowrap; }
+  #tooltip.show { opacity: 1; }
+
+  #caption { position: fixed; left: 50%; bottom: 74px; transform: translate(-50%, 10px); z-index: 12; width: min(680px, calc(100vw - 48px)); text-align: center;
+    font-family: var(--serif); font-size: clamp(17px, 1.6vw, 21px); line-height: 1.45; color: var(--ink); text-shadow: 0 0 18px #000, 0 0 4px #000;
+    opacity: 0; transition: opacity 1s ease, transform 1s ease; pointer-events: none; }
+  #caption.show { opacity: 1; transform: translate(-50%, 0); }
+
+  body.busy { cursor: progress; }
+  #credits { position: fixed; left: 24px; bottom: 64px; z-index: 9; font-size: 10.5px; color: rgba(225,232,245,0.28); max-width: 340px; line-height: 1.5; }
+  #credits a { color: inherit; }
+
+  @media (max-width: 760px) {
+    #crumbs, #hint, #credits, #scale, #brand .sub { display: none; }
+    #brand { top: 16px; left: 16px; }
+    #brand .name { font-size: 17px; }
+    #searchbox { top: 50px; left: 12px; right: 12px; width: auto; }
+    #search { font-size: 15px; }
+    #toggles { top: 12px; right: 12px; bottom: auto; }
+    #toggles details { flex-direction: column; }
+    #toggles[open] summary { margin: 0 0 8px; }
+    #toggles summary { padding: 6px 12px; }
+    #info { top: auto; bottom: 64px; max-height: 40vh; right: 12px; left: 12px; width: auto; padding: 18px 18px 14px; border-radius: 16px; }
+    #info h2 { font-size: 23px; }
+    #time { left: 12px; right: 12px; bottom: 12px; justify-content: space-between; padding-left: 12px; }
+    #date { margin-right: 4px; font-size: 11px; }
+    #warp { min-width: 64px; font-size: 11px; }
+    #caption { bottom: auto; top: 104px; font-size: 16px; }
+    #intro { padding: 0 22px 36px; }
+  }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<canvas id="scene"></canvas>
+<div id="labels"></div>
+<div id="tooltip"></div>
+
+<div id="loading"><div class="box">
+  <div class="t">Known Worlds</div>
+  <div class="bar"><i></i></div>
+  <div class="msg">Starting</div>
+</div></div>
+
+<section id="intro">
+  <div class="eyebrow">An atlas of every confirmed planet</div>
+  <h1>Known <em>Worlds</em></h1>
+  <p>Every planet humanity has confirmed, placed at its true position around its real star, using live data from the NASA Exoplanet Archive. Start at home, on today's date, and fly out past the Milky Way to the galaxies beyond.</p>
+  <div class="stats">
+    <div><b data-count="planets">—</b>exoplanets</div>
+    <div><b data-count="hosts">—</b>planetary systems</div>
+    <div><b>27,440</b>catalogued stars</div>
+    <div><b data-count="galaxies">—</b>galaxies</div>
+  </div>
+  <div class="cta">
+    <button class="btn primary" id="tour">Take the tour</button>
+    <button class="btn" id="begin">Start at Earth</button>
+    <button class="btn" id="explore">Explore freely</button>
+  </div>
+</section>
+
+<header id="brand" class="chrome">
+  <div class="name">Known Worlds</div>
+  <div class="sub">NASA Exoplanet Archive · 3D</div>
+</header>
+<nav id="crumbs" class="chrome"></nav>
+<div id="searchbox" class="chrome">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+  <input id="search" placeholder="Search planets, stars, galaxies" autocomplete="off" spellcheck="false" />
+  <kbd>/</kbd>
+  <div id="results"></div>
+</div>
+<aside id="info"></aside>
+<div id="hint" class="chrome">Drag to look around · scroll to zoom<br />Click a star to fly there · Esc to go back</div>
+<div id="time">
+  <span id="date"></span>
+  <button data-t="slower" title="Slower">‹‹</button>
+  <span id="warp"></span>
+  <button data-t="faster" title="Faster">››</button>
+  <button data-t="pause" title="Pause (space)">❚❚</button>
+  <button class="now" data-t="now">Now</button>
+</div>
+<div id="scale" class="chrome"></div>
+<div id="caption"></div>
+<div id="toggles" class="chrome"><details>
+  <summary>Layers</summary>
+  <div class="opts">
+    <label><input type="checkbox" data-opt="labels" checked />Labels</label>
+    <label><input type="checkbox" data-opt="orbits" checked />Orbits</label>
+    <label><input type="checkbox" data-opt="hz" checked />Habitable zones</label>
+    <label><input type="checkbox" data-opt="hosts" checked />Stars with planets</label>
+    <label><input type="checkbox" data-opt="stars" checked />Other stars</label>
+    <label><input type="checkbox" data-opt="rings" checked />Distance rings</label>
+    <label><input type="checkbox" data-opt="milkyway" checked />Milky Way</label>
+    <label><input type="checkbox" data-opt="galaxies" checked />Galaxies</label>
+  </div>
+</details></div>
+<div id="credits" class="chrome">Planets: <a href="https://exoplanetarchive.ipac.caltech.edu/" target="_blank" rel="noopener">NASA Exoplanet Archive</a>. Stars: HYG database. Orbits: JPL. Coastlines: Natural Earth. Exoplanet surfaces are artist's impressions.</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
